@@ -190,99 +190,69 @@
   .diag-card li strong { font-weight: 600; }
   .diag-card li span.detail { color: var(--muted); }
 
-  /* ---------- Roadmap progress rail ---------- */
-  .rail {
+  /* ---------- Roadmap (timeline) ---------- */
+  .timeline {
     position: relative;
-    height: 34px;
-    margin: 4px 0 28px;
+    margin-top: 8px;
   }
-  .rail-track {
+
+  .timeline::before {
+    content: '';
     position: absolute;
-    left: 0; right: 0; top: 16px;
-    height: 2px;
-    background: var(--line);
+    left: 19px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--line) 0,
+      var(--line) 6px,
+      transparent 6px,
+      transparent 12px
+    );
   }
-  .rail-months {
+
+  .phase {
     position: relative;
-    display: flex;
-    justify-content: space-between;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11.5px;
-    color: var(--muted);
-    letter-spacing: 0.03em;
+    padding-left: 60px;
+    margin-bottom: 40px;
   }
-  .rail-today {
+  .phase:last-child { margin-bottom: 0; }
+
+  .phase-marker {
     position: absolute;
-    top: 10px;
-    left: 6%;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--teal);
-    border: 2px solid var(--bg);
-    box-shadow: 0 0 0 2px var(--teal);
-  }
-  .rail-today::after {
-    content: 'AUJOURD\2019HUI';
-    position: absolute;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: var(--teal);
-    white-space: nowrap;
-  }
-
-  /* ---------- Roadmap (kanban) ---------- */
-  .roadmap-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    align-items: start;
-  }
-
-  @media (max-width: 920px) {
-    .roadmap-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 560px) {
-    .roadmap-grid { grid-template-columns: 1fr; }
-  }
-
-  .phase-card {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-top: 3px solid var(--teal);
+    left: 0;
+    top: 0;
+    width: 40px;
+    height: 40px;
     border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .phase-card.status-critical { border-top-color: var(--amber); }
-  .phase-card.status-upcoming { border-top-color: var(--gray); }
-
-  .phase-card-top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 8px;
-  }
-
-  .phase-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
     background: var(--teal-soft);
     color: var(--teal);
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
   }
-  .phase-card.status-critical .phase-icon { background: var(--amber-soft); color: var(--amber); }
-  .phase-card.status-upcoming .phase-icon { background: var(--gray-soft); color: var(--gray); }
-  .phase-icon svg { width: 18px; height: 18px; }
+  .phase.status-critical .phase-marker { background: var(--amber-soft); color: var(--amber); }
+  .phase.status-upcoming .phase-marker { background: var(--gray-soft); color: var(--gray); }
+  .phase-marker svg { width: 20px; height: 20px; }
+
+  .phase-head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 2px;
+  }
+
+  .phase-title {
+    font-size: 19px;
+  }
+
+  .phase-window {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
 
   .status-pill {
     font-family: 'IBM Plex Mono', monospace;
@@ -294,54 +264,52 @@
     background: var(--teal-soft);
     color: var(--teal);
     white-space: nowrap;
+    margin-left: auto;
   }
-  .phase-card.status-critical .status-pill { background: var(--amber-soft); color: var(--amber); }
-  .phase-card.status-upcoming .status-pill { background: var(--gray-soft); color: var(--gray); }
-
-  .phase-title {
-    font-size: 17px;
-    margin-top: 2px;
-  }
-
-  .phase-window {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11.5px;
-    color: var(--muted);
-  }
+  .phase.status-critical .status-pill { background: var(--amber-soft); color: var(--amber); }
+  .phase.status-upcoming .status-pill { background: var(--gray-soft); color: var(--gray); }
 
   .phase-goal {
     color: var(--muted);
-    font-size: 13.5px;
-    margin: 0;
+    font-size: 14.5px;
+    margin: 6px 0 18px;
+    max-width: 560px;
   }
 
-  .phase-actions {
+  .actions {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-top: 2px;
+    gap: 10px;
   }
 
-  .phase-action {
-    background: var(--bg);
+  .action {
+    background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 7px;
-    padding: 11px 13px;
+    border-radius: 8px;
+    padding: 14px 16px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
   }
 
-  .phase-action-text {
-    font-size: 13.5px;
-    line-height: 1.45;
-  }
-
-  .phase-action-foot {
+  .action-top {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    gap: 8px;
+    gap: 16px;
+  }
+
+  .action-text {
+    font-size: 14.5px;
+    flex: 1;
+  }
+
+  .action-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    flex-shrink: 0;
   }
 
   .owners {
@@ -456,163 +424,171 @@
 
   <div class="section-label">Roadmap · prochaines étapes</div>
 
-  <div class="rail">
-    <div class="rail-track"></div>
-    <div class="rail-today"></div>
-    <div class="rail-months">
-      <span>SEPT.</span><span>OCT.</span><span>NOV.</span><span>DÉC.</span>
-    </div>
-  </div>
+  <div class="timeline">
 
-  <div class="roadmap-grid">
-
-    <div class="phase-card">
-      <div class="phase-card-top">
-        <div class="phase-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2"/><line x1="12" y1="2.5" x2="12" y2="5.5"/></svg>
-        </div>
-        <span class="status-pill">EN COURS</span>
+    <div class="phase">
+      <div class="phase-marker">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2"/><line x1="12" y1="2.5" x2="12" y2="5.5"/></svg>
       </div>
-      <div>
+      <div class="phase-head">
         <div class="phase-title">1 · Cadrer avant de vendre</div>
         <div class="phase-window">MAINTENANT → FIN SEPT.</div>
+        <span class="status-pill">EN COURS</span>
       </div>
       <p class="phase-goal">Ne plus jamais entrer dans une négociation sans offre écrite.</p>
-      <div class="phase-actions">
-        <div class="phase-action">
-          <div class="phase-action-text">Construire le formulaire de cadrage technique standardisé (checklist WMS / TMS / CMS par type de client)</div>
-          <div class="phase-action-foot">
-            <div class="owners"><span class="tag maxime">MAXIME</span><span class="tag rawdah">RAWDAH</span></div>
-            <div class="due">Fin sept.</div>
+      <div class="actions">
+        <div class="action">
+          <div class="action-top">
+            <div class="action-text">Construire le formulaire de cadrage technique standardisé (checklist WMS / TMS / CMS par type de client)</div>
+            <div class="action-meta">
+              <div class="owners"><span class="tag maxime">MAXIME</span><span class="tag rawdah">RAWDAH</span></div>
+              <div class="due">Fin sept.</div>
+            </div>
           </div>
           <div class="role-note">Maxime : contenu technique · Rawdah : structuration</div>
         </div>
-        <div class="phase-action">
-          <div class="phase-action-text">Définir la grille tarifaire, aujourd'hui inexistante</div>
-          <div class="phase-action-foot">
-            <div class="owners"><span class="tag maxime">MAXIME</span><span class="tag rawdah">RAWDAH</span></div>
-            <div class="due">Fin sept.</div>
+        <div class="action">
+          <div class="action-top">
+            <div class="action-text">Définir la grille tarifaire, aujourd'hui inexistante</div>
+            <div class="action-meta">
+              <div class="owners"><span class="tag maxime">MAXIME</span><span class="tag rawdah">RAWDAH</span></div>
+              <div class="due">Fin sept.</div>
+            </div>
           </div>
         </div>
-        <div class="phase-action">
-          <div class="phase-action-text">Rendez-vous de travail pour poser tout ça noir sur blanc</div>
-          <div class="phase-action-foot">
-            <div class="owners"><span class="tag rawdah">RAWDAH</span><span class="tag maxime">MAXIME</span></div>
-            <div class="due">Sem. du 8 sept.</div>
+        <div class="action">
+          <div class="action-top">
+            <div class="action-text">Rendez-vous de travail pour poser tout ça noir sur blanc</div>
+            <div class="action-meta">
+              <div class="owners"><span class="tag rawdah">RAWDAH</span><span class="tag maxime">MAXIME</span></div>
+              <div class="due">Sem. du 8 sept.</div>
+            </div>
           </div>
           <div class="role-note">RDV Paris</div>
         </div>
       </div>
     </div>
 
-    <div class="phase-card">
-      <div class="phase-card-top">
-        <div class="phase-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="9.5" rx="1.6"/><path d="M8 10.5V7.5a4 4 0 0 1 7.4-2"/></svg>
-        </div>
-        <span class="status-pill">EN COURS</span>
+    <div class="phase">
+      <div class="phase-marker">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="9.5" rx="1.6"/><path d="M8 10.5V7.5a4 4 0 0 1 7.4-2"/></svg>
       </div>
-      <div>
+      <div class="phase-head">
         <div class="phase-title">2 · Débloquer le pilote e-commerce</div>
         <div class="phase-window">SEPT. → OCT.</div>
+        <span class="status-pill">EN COURS</span>
       </div>
       <p class="phase-goal">Être opérationnel avant la peak season (Black Friday, Noël).</p>
-      <div class="phase-actions">
-        <div class="phase-action">
-          <div class="phase-action-text">Relancer le client « litière française » pour obtenir le go</div>
-          <div class="phase-action-foot">
-            <div class="owners"><span class="tag maxime">MAXIME</span></div>
-            <div class="due">Sem. du 14 sept.</div>
+      <div class="actions">
+        <div class="action">
+          <div class="action-top">
+            <div class="action-text">Relancer le client « litière française » pour obtenir le go</div>
+            <div class="action-meta">
+              <div class="owners"><span class="tag maxime">MAXIME</span></div>
+              <div class="due">Sem. du 14 sept.</div>
+            </div>
           </div>
         </div>
-        <div class="phase-action">
-          <div class="phase-action-text">Démarrer le test technique</div>
-          <div class="phase-action-foot">
-            <div class="owners"><span class="tag maxime">MAXIME</span></div>
-            <div class="due">Fin sept. / déb. oct.</div>
+        <div class="action">
+          <div class="action-top">
+            <div class="action-text">Démarrer le test technique</div>
+            <div class="action-meta">
+              <div class="owners"><span class="tag maxime">MAXIME</span></div>
+              <div class="due">Fin sept. / déb. oct.</div>
+            </div>
           </div>
         </div>
-        <div class="phase-action">
-          <div class="phase-action-text">Se concentrer sur les blocs 1 et 2 (tracking client, remontée d'info) ; reporter le bloc 3 (tracking amont) à une analyse de marché en fin d'année</div>
-          <div class="phase-action-foot">
-            <div class="owners"><span class="tag maxime">MAXIME</span></div>
-            <div class="due">Avant peak season</div>
+        <div class="action">
+          <div class="action-top">
+            <div class="action-text">Se concentrer sur les blocs 1 et 2 (tracking client, remontée d'info) ; reporter le bloc 3 (tracking amont) à une analyse de marché en fin d'année</div>
+            <div class="action-meta">
+              <div class="owners"><span class="tag maxime">MAXIME</span></div>
+              <div class="due">Avant peak season</div>
+            </div>
           </div>
         </div>
-        <div class="phase-action">
-          <div class="phase-action-text">Sourcer 2 à 4 e-commerçants supplémentaires pour élargir la base de test et généraliser les connecteurs</div>
-          <div class="phase-action-foot">
-            <div class="owners"><span class="tag rawdah">RAWDAH</span><span class="tag maxime">MAXIME</span></div>
-            <div class="due">TBD</div>
+        <div class="action">
+          <div class="action-top">
+            <div class="action-text">Sourcer 2 à 4 e-commerçants supplémentaires pour élargir la base de test et généraliser les connecteurs</div>
+            <div class="action-meta">
+              <div class="owners"><span class="tag rawdah">RAWDAH</span><span class="tag maxime">MAXIME</span></div>
+              <div class="due">TBD</div>
+            </div>
           </div>
           <div class="role-note">Rawdah : contacts</div>
         </div>
       </div>
     </div>
 
-    <div class="phase-card status-critical">
-      <div class="phase-card-top">
-        <div class="phase-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4"/><path d="M6 4h12l-3 4 3 4H6"/></svg>
-        </div>
-        <span class="status-pill">CRITIQUE</span>
+    <div class="phase status-critical">
+      <div class="phase-marker">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4"/><path d="M6 4h12l-3 4 3 4H6"/></svg>
       </div>
-      <div>
+      <div class="phase-head">
         <div class="phase-title">3 · Clôturer L'arbre vert</div>
         <div class="phase-window">MAINTENANT → 15 OCT.</div>
+        <span class="status-pill">CRITIQUE</span>
       </div>
       <p class="phase-goal">La fenêtre la plus proche et la plus qualifiée — deadline ferme.</p>
-      <div class="phase-actions">
-        <div class="phase-action">
-          <div class="phase-action-text">Construire une démo ou maquette concrète à partir de l'existant sur la plateforme</div>
-          <div class="phase-action-foot">
-            <div class="owners"><span class="tag maxime">MAXIME</span><span class="tag rawdah">RAWDAH</span></div>
-            <div class="due">Avant le 15 oct.</div>
+      <div class="actions">
+        <div class="action">
+          <div class="action-top">
+            <div class="action-text">Construire une démo ou maquette concrète à partir de l'existant sur la plateforme</div>
+            <div class="action-meta">
+              <div class="owners"><span class="tag maxime">MAXIME</span><span class="tag rawdah">RAWDAH</span></div>
+              <div class="due">Avant le 15 oct.</div>
+            </div>
           </div>
           <div class="role-note">Maxime : démo · Rawdah : récit commercial</div>
         </div>
-        <div class="phase-action">
-          <div class="phase-action-text">Chiffrer une proposition : prix, périmètre, délai d'implémentation</div>
-          <div class="phase-action-foot">
-            <div class="owners"><span class="tag rawdah">RAWDAH</span><span class="tag maxime">MAXIME</span></div>
-            <div class="due">Avant le 15 oct.</div>
+        <div class="action">
+          <div class="action-top">
+            <div class="action-text">Chiffrer une proposition : prix, périmètre, délai d'implémentation</div>
+            <div class="action-meta">
+              <div class="owners"><span class="tag rawdah">RAWDAH</span><span class="tag maxime">MAXIME</span></div>
+              <div class="due">Avant le 15 oct.</div>
+            </div>
           </div>
         </div>
-        <div class="phase-action">
-          <div class="phase-action-text">Présenter une démo chez L'arbre vert</div>
-          <div class="phase-action-foot">
-            <div class="owners"><span class="tag maxime">MAXIME</span></div>
-            <div class="due">15 octobre</div>
+        <div class="action">
+          <div class="action-top">
+            <div class="action-text">Présenter une démo chez L'arbre vert</div>
+            <div class="action-meta">
+              <div class="owners"><span class="tag maxime">MAXIME</span></div>
+              <div class="due">15 octobre</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="phase-card status-upcoming">
-      <div class="phase-card-top">
-        <div class="phase-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9"/><path d="M10 19V5"/><path d="M16 19v-7"/><path d="M20 19V3"/></svg>
-        </div>
-        <span class="status-pill">À VENIR</span>
+    <div class="phase status-upcoming">
+      <div class="phase-marker">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9"/><path d="M10 19V5"/><path d="M16 19v-7"/><path d="M20 19V3"/></svg>
       </div>
-      <div>
+      <div class="phase-head">
         <div class="phase-title">4 · Capitaliser</div>
         <div class="phase-window">FIN D'ANNÉE</div>
+        <span class="status-pill">À VENIR</span>
       </div>
       <p class="phase-goal">Transformer le pilote en preuve commerciale réutilisable.</p>
-      <div class="phase-actions">
-        <div class="phase-action">
-          <div class="phase-action-text">Construire le cas client (contexte, action, résultat) dès que le pilote e-commerce donne des résultats factuels</div>
-          <div class="phase-action-foot">
-            <div class="owners"><span class="tag rawdah">RAWDAH</span></div>
-            <div class="due">Fin d'année</div>
+      <div class="actions">
+        <div class="action">
+          <div class="action-top">
+            <div class="action-text">Construire le cas client (contexte, action, résultat) dès que le pilote e-commerce donne des résultats factuels</div>
+            <div class="action-meta">
+              <div class="owners"><span class="tag rawdah">RAWDAH</span></div>
+              <div class="due">Fin d'année</div>
+            </div>
           </div>
         </div>
-        <div class="phase-action">
-          <div class="phase-action-text">S'en servir pour aborder un deuxième client e-commerce et accélérer la conversion B2B au-delà de L'arbre vert</div>
-          <div class="phase-action-foot">
-            <div class="owners"><span class="tag rawdah">RAWDAH</span><span class="tag maxime">MAXIME</span></div>
-            <div class="due">Fin d'année / déb. 2027</div>
+        <div class="action">
+          <div class="action-top">
+            <div class="action-text">S'en servir pour aborder un deuxième client e-commerce et accélérer la conversion B2B au-delà de L'arbre vert</div>
+            <div class="action-meta">
+              <div class="owners"><span class="tag rawdah">RAWDAH</span><span class="tag maxime">MAXIME</span></div>
+              <div class="due">Fin d'année / déb. 2027</div>
+            </div>
           </div>
         </div>
       </div>
