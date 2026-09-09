@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Yara Link — Diagnostic &amp; Roadmap</title>
+<title>Yara Link — Diagnostic &amp; Next Steps</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
@@ -22,6 +22,8 @@
     --rawdah-soft: #E7ECF4;
     --maxime: #6B5B95;
     --maxime-soft: #EEEAF5;
+    --gray: #7A8088;
+    --gray-soft: #E9EAE5;
   }
 
   * { box-sizing: border-box; }
@@ -43,14 +45,14 @@
   }
 
   .wrap {
-    max-width: 880px;
+    max-width: 1080px;
     margin: 0 auto;
     padding: 64px 24px 100px;
   }
 
   /* ---------- Header ---------- */
   header {
-    margin-bottom: 56px;
+    margin-bottom: 48px;
   }
 
   .kicker {
@@ -65,28 +67,68 @@
     font-size: 40px;
     line-height: 1.15;
     letter-spacing: -0.01em;
-    max-width: 620px;
+    max-width: 700px;
   }
 
   .subhead {
     margin-top: 18px;
     font-size: 17px;
     color: var(--muted);
-    max-width: 560px;
+    max-width: 640px;
   }
 
   .risk-banner {
-    margin-top: 32px;
+    margin-top: 28px;
     border-left: 3px solid var(--amber);
     background: var(--amber-soft);
     padding: 16px 20px;
     border-radius: 0 6px 6px 0;
     font-size: 15px;
     color: #6B4A1B;
+    max-width: 720px;
   }
 
   .risk-banner strong {
     color: #4A3110;
+  }
+
+  /* ---------- Context ---------- */
+  .context {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+
+  @media (max-width: 760px) {
+    .context { grid-template-columns: 1fr; }
+  }
+
+  .context p {
+    font-size: 15.5px;
+    color: var(--ink);
+    margin: 0 0 14px;
+  }
+  .context p:last-child { margin-bottom: 0; }
+
+  .priority-box {
+    background: var(--teal-soft);
+    border-left: 3px solid var(--teal);
+    border-radius: 0 6px 6px 0;
+    padding: 18px 20px;
+  }
+
+  .priority-box .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    color: var(--teal);
+    letter-spacing: 0.03em;
+    margin-bottom: 8px;
+  }
+
+  .priority-box p {
+    font-size: 14.5px;
+    color: #123B31;
   }
 
   /* ---------- Section labels ---------- */
@@ -112,9 +154,10 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+    align-items: start;
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 720px) {
     .diag-grid { grid-template-columns: 1fr; }
   }
 
@@ -141,113 +184,164 @@
   .diag-card li {
     font-size: 14.5px;
     color: var(--ink);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
   .diag-card li:last-child { margin-bottom: 0; }
   .diag-card li strong { font-weight: 600; }
+  .diag-card li span.detail { color: var(--muted); }
 
-  /* ---------- Timeline (the roadmap) ---------- */
-  .timeline {
+  /* ---------- Roadmap progress rail ---------- */
+  .rail {
     position: relative;
-    margin-top: 8px;
+    height: 34px;
+    margin: 4px 0 28px;
   }
-
-  .timeline::before {
-    content: '';
+  .rail-track {
     position: absolute;
-    left: 13px;
+    left: 0; right: 0; top: 16px;
+    height: 2px;
+    background: var(--line);
+  }
+  .rail-months {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+  }
+  .rail-today {
+    position: absolute;
     top: 10px;
-    bottom: 10px;
-    width: 2px;
-    background: repeating-linear-gradient(
-      to bottom,
-      var(--line) 0,
-      var(--line) 6px,
-      transparent 6px,
-      transparent 12px
-    );
-  }
-
-  .phase {
-    position: relative;
-    padding-left: 46px;
-    margin-bottom: 44px;
-  }
-  .phase:last-child { margin-bottom: 0; }
-
-  .phase-marker {
-    position: absolute;
-    left: 0;
-    top: 2px;
-    width: 28px;
-    height: 28px;
+    left: 6%;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+  .rail-today::after {
+    content: 'AUJOURD\2019HUI';
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    white-space: nowrap;
+  }
+
+  /* ---------- Roadmap (kanban) ---------- */
+  .roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+
+  @media (max-width: 920px) {
+    .roadmap-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .roadmap-grid { grid-template-columns: 1fr; }
+  }
+
+  .phase-card {
     background: var(--panel);
-    border: 2px solid var(--teal);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--teal);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .phase-card.status-critical { border-top-color: var(--amber); }
+  .phase-card.status-upcoming { border-top-color: var(--gray); }
+
+  .phase-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .phase-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: var(--teal-soft);
     color: var(--teal);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    font-weight: 500;
+    flex-shrink: 0;
   }
+  .phase-card.status-critical .phase-icon { background: var(--amber-soft); color: var(--amber); }
+  .phase-card.status-upcoming .phase-icon { background: var(--gray-soft); color: var(--gray); }
+  .phase-icon svg { width: 18px; height: 18px; }
 
-  .phase-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 4px;
+  .status-pill {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: var(--teal-soft);
+    color: var(--teal);
+    white-space: nowrap;
   }
+  .phase-card.status-critical .status-pill { background: var(--amber-soft); color: var(--amber); }
+  .phase-card.status-upcoming .status-pill { background: var(--gray-soft); color: var(--gray); }
 
   .phase-title {
-    font-size: 19px;
+    font-size: 17px;
+    margin-top: 2px;
   }
 
   .phase-window {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 12.5px;
+    font-size: 11.5px;
     color: var(--muted);
-    white-space: nowrap;
   }
 
   .phase-goal {
     color: var(--muted);
-    font-size: 14.5px;
-    margin: 6px 0 18px;
-    max-width: 560px;
+    font-size: 13.5px;
+    margin: 0;
   }
 
-  .actions {
+  .phase-actions {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
+    margin-top: 2px;
   }
 
-  .action {
-    background: var(--panel);
+  .phase-action {
+    background: var(--bg);
     border: 1px solid var(--line);
     border-radius: 7px;
-    padding: 13px 16px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 16px;
-  }
-
-  .action-text {
-    font-size: 14.5px;
-    flex: 1;
-  }
-
-  .action-meta {
+    padding: 11px 13px;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    gap: 6px;
-    flex-shrink: 0;
+    gap: 8px;
+  }
+
+  .phase-action-text {
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+
+  .phase-action-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
   }
 
   .owners {
@@ -257,9 +351,9 @@
 
   .tag {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 500;
-    padding: 3px 8px;
+    padding: 3px 7px;
     border-radius: 4px;
     white-space: nowrap;
   }
@@ -268,14 +362,9 @@
   .tag.maxime { background: var(--maxime-soft); color: var(--maxime); }
 
   .due {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--muted);
-  }
-
-  /* Phase 3 gets the amber marker — it's the deadline-critical one */
-  .phase.critical .phase-marker {
-    border-color: var(--amber);
-    color: var(--amber);
+    white-space: nowrap;
   }
 
   /* ---------- Legend ---------- */
@@ -302,6 +391,7 @@
   .legend .dot.rawdah { background: var(--rawdah); }
   .legend .dot.maxime { background: var(--maxime); }
   .legend .dot.critical { background: var(--amber); }
+  .legend .dot.upcoming { background: var(--gray); }
 
   footer {
     margin-top: 72px;
@@ -318,132 +408,169 @@
   <header>
     <div class="kicker">DIAGNOSTIC OPÉRATIONNEL · ATELIER OPERATIONS · SEPTEMBRE 2026</div>
     <h1>Yara Link : le produit est prêt, l'exécution commerciale ne l'est pas.</h1>
-    <p class="subhead">Deux dossiers en cours, un pilote e-commerce et l'opportunité B2B chez L'arbre vert, sont au point mort pour la même raison : rien n'a été cadré, chiffré ni formalisé avant d'aller voir le client.</p>
+    <p class="subhead">Le problème n'est pas le produit : c'est la structuration de l'offre. Les deux dossiers en cours — le pilote e-commerce et l'opportunité B2B chez L'arbre vert — sont à l'arrêt ou au point mort pour la même raison.</p>
     <div class="risk-banner">
-      <strong>Risque principal —</strong> si L'arbre vert traîne au-delà du 15 octobre, ou si le pilote e-commerce reste bloqué après la peak season, Yara Link perd sa meilleure fenêtre de preuve pour l'année.
+      <strong>Risque principal —</strong> si L'arbre vert traîne sans structuration claire au-delà du 15 octobre, ou si le pilote e-commerce reste bloqué au-delà de la peak season (Black Friday, Noël), Yara Link perd sa meilleure fenêtre de preuve pour l'année.
     </div>
   </header>
+
+  <div class="section-label">Contexte</div>
+  <div class="context">
+    <div>
+      <p>Yara Link a une proposition de valeur solide et un produit techniquement prêt sur ses deux segments, B2B et e-commerce. Le problème n'est pas le produit : c'est l'exécution commerciale et la structuration de l'offre.</p>
+      <p>Les deux dossiers en cours — le pilote e-commerce et l'opportunité B2B chez L'arbre vert — sont à l'arrêt ou au point mort pour la même raison : rien n'a été cadré, chiffré, ni formalisé avant d'aller voir le client.</p>
+    </div>
+    <div class="priority-box">
+      <div class="label">PRIORITÉ RECOMMANDÉE</div>
+      <p>Sécuriser et clôturer le dossier L'arbre vert d'ici le 15 octobre, en parallèle d'un déblocage du pilote e-commerce. Potentiellement, les deux financent la suite : le premier apporte du cash rapidement, le second devient la preuve commerciale pour la suite de l'année.</p>
+    </div>
+  </div>
 
   <div class="section-label">Ce qu'on sait</div>
   <div class="diag-grid">
     <div class="diag-card works">
       <h3>Ce qui fonctionne</h3>
       <ul>
-        <li><strong>Produit mature</strong> — connecteurs WMS/e-commerce, alertes automatiques, tracking en marque blanche, réconciliation de factures déjà construits.</li>
-        <li><strong>Accès direct</strong> chez L'arbre vert (décisionnaire budget) et pilote déjà connecté côté e-commerce.</li>
-        <li><strong>Proposition différenciante</strong> — personne ne couvre la chaîne de bout en bout, en particulier le tracking amont.</li>
+        <li><strong>Produit mature</strong> — <span class="detail">connecteurs WMS/e-commerce, alertes automatiques (mail, SMS, WhatsApp), tracking en marque blanche, réconciliation auto des factures transporteur. Maxime teste même une couche IA/MCP pour piloter l'outil en langage naturel.</span></li>
+        <li><strong>Accès direct et crédibilité réelle</strong> — <span class="detail">consultant SAP/BI chez L'arbre vert depuis 2,5 ans, accès direct à la DAF décisionnaire du budget ; pilote e-commerce déjà connecté au WMS du client (Reflex/Hardis, 30–40 % du marché français).</span></li>
+        <li><strong>Proposition différenciante</strong> — <span class="detail">personne ne couvre la chaîne de bout en bout, en particulier le tracking amont (usine → entrepôt, Chine → France). Le concurrent chez L'arbre vert s'arrête à une surcouche du WMS.</span></li>
       </ul>
     </div>
     <div class="diag-card blocks">
       <h3>Ce qui bloque</h3>
       <ul>
-        <li><strong>Aucune offre chiffrée</strong> — ni prix, ni périmètre formalisé, sur aucun des deux dossiers.</li>
-        <li><strong>Pilote e-commerce à l'arrêt</strong> depuis fin juillet, en attente d'un go client.</li>
-        <li><strong>Onboarding à 10 jours</strong> alors que le dev n'en prend que 3 — le reste se perd dans la collecte d'infos client.</li>
+        <li><strong>Aucune offre chiffrée</strong> — <span class="detail">ni prix ni périmètre formalisé sur aucun des deux dossiers, seulement des échanges informels.</span></li>
+        <li><strong>Pilote e-commerce à l'arrêt</strong> — <span class="detail">depuis fin juillet, en attente d'un go client, ralenti par un changement d'entrepôt interne ; la proposition tarifaire est arrivée trop tôt après la démo, sans preuve ni référence client.</span></li>
+        <li><strong>Onboarding à 10 jours</strong> — <span class="detail">alors que le développement lui-même n'en prend que 3 ; le reste se perd dans la collecte d'infos client (documentation manquante, accès pare-feu).</span></li>
+        <li><strong>Aucune preuve commerciale</strong> — <span class="detail">sans cas client démontré, chaque nouvelle conversation repart de zéro.</span></li>
+        <li><strong>Tracking amont dépendant d'un tiers non captif</strong> — <span class="detail">les commissionnaires de transport (CMA CGM et trois autres) ne donnent l'accès API qu'à leurs clients directs ; une piste (outil gratuit en échange de l'accès) reste à valider.</span></li>
       </ul>
     </div>
   </div>
 
-  <div class="section-label">Roadmap</div>
+  <div class="section-label">Roadmap · prochaines étapes</div>
 
-  <div class="timeline">
+  <div class="rail">
+    <div class="rail-track"></div>
+    <div class="rail-today"></div>
+    <div class="rail-months">
+      <span>SEPT.</span><span>OCT.</span><span>NOV.</span><span>DÉC.</span>
+    </div>
+  </div>
 
-    <div class="phase">
-      <div class="phase-marker">1</div>
-      <div class="phase-head">
-        <div class="phase-title">Cadrer avant de vendre</div>
+  <div class="roadmap-grid">
+
+    <div class="phase-card">
+      <div class="phase-card-top">
+        <div class="phase-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2"/><line x1="12" y1="2.5" x2="12" y2="5.5"/></svg>
+        </div>
+        <span class="status-pill">EN COURS</span>
+      </div>
+      <div>
+        <div class="phase-title">1 · Cadrer avant de vendre</div>
         <div class="phase-window">MAINTENANT → FIN SEPT.</div>
       </div>
       <p class="phase-goal">Ne plus jamais entrer dans une négociation sans offre écrite.</p>
-      <div class="actions">
-        <div class="action">
-          <div class="action-text">Construire le formulaire de cadrage technique standardisé (checklist WMS / TMS / CMS par type de client)</div>
-          <div class="action-meta">
+      <div class="phase-actions">
+        <div class="phase-action">
+          <div class="phase-action-text">Construire le formulaire de cadrage technique standardisé (checklist WMS / TMS / CMS par type de client)</div>
+          <div class="phase-action-foot">
             <div class="owners"><span class="tag maxime">MAXIME</span><span class="tag rawdah">RAWDAH</span></div>
-            <div class="due">Fin septembre</div>
+            <div class="due">Fin sept.</div>
           </div>
         </div>
-        <div class="action">
-          <div class="action-text">Définir la grille tarifaire, aujourd'hui inexistante</div>
-          <div class="action-meta">
+        <div class="phase-action">
+          <div class="phase-action-text">Définir la grille tarifaire, aujourd'hui inexistante</div>
+          <div class="phase-action-foot">
             <div class="owners"><span class="tag rawdah">RAWDAH</span></div>
-            <div class="due">Fin septembre</div>
+            <div class="due">Fin sept.</div>
           </div>
         </div>
-        <div class="action">
-          <div class="action-text">Rendez-vous de travail pour poser tout ça noir sur blanc</div>
-          <div class="action-meta">
+        <div class="phase-action">
+          <div class="phase-action-text">Rendez-vous de travail pour poser tout ça noir sur blanc (RDV Paris)</div>
+          <div class="phase-action-foot">
             <div class="owners"><span class="tag rawdah">RAWDAH</span><span class="tag maxime">MAXIME</span></div>
-            <div class="due">Semaine du 8 sept.</div>
+            <div class="due">Sem. du 8 sept.</div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="phase">
-      <div class="phase-marker">2</div>
-      <div class="phase-head">
-        <div class="phase-title">Débloquer le pilote e-commerce</div>
+    <div class="phase-card">
+      <div class="phase-card-top">
+        <div class="phase-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="9.5" rx="1.6"/><path d="M8 10.5V7.5a4 4 0 0 1 7.4-2"/></svg>
+        </div>
+        <span class="status-pill">EN COURS</span>
+      </div>
+      <div>
+        <div class="phase-title">2 · Débloquer le pilote e-commerce</div>
         <div class="phase-window">SEPT. → OCT.</div>
       </div>
       <p class="phase-goal">Être opérationnel avant la peak season (Black Friday, Noël).</p>
-      <div class="actions">
-        <div class="action">
-          <div class="action-text">Relancer le client « litière française » pour obtenir le go</div>
-          <div class="action-meta">
+      <div class="phase-actions">
+        <div class="phase-action">
+          <div class="phase-action-text">Relancer le client « litière française » pour obtenir le go</div>
+          <div class="phase-action-foot">
             <div class="owners"><span class="tag maxime">MAXIME</span></div>
-            <div class="due">Semaine du 8 sept.</div>
+            <div class="due">Sem. du 14 sept.</div>
           </div>
         </div>
-        <div class="action">
-          <div class="action-text">Démarrer le test technique</div>
-          <div class="action-meta">
+        <div class="phase-action">
+          <div class="phase-action-text">Démarrer le test technique</div>
+          <div class="phase-action-foot">
             <div class="owners"><span class="tag maxime">MAXIME</span></div>
-            <div class="due">Fin sept. / début oct.</div>
+            <div class="due">Fin sept. / déb. oct.</div>
           </div>
         </div>
-        <div class="action">
-          <div class="action-text">Se concentrer sur les blocs 1 et 2 (tracking client, remontée d'info) — reporter le tracking amont à une analyse de marché fin d'année</div>
-          <div class="action-meta">
+        <div class="phase-action">
+          <div class="phase-action-text">Se concentrer sur les blocs 1 et 2 (tracking client, remontée d'info) — reporter le bloc 3 (tracking amont) à une analyse de marché fin d'année</div>
+          <div class="phase-action-foot">
             <div class="owners"><span class="tag maxime">MAXIME</span></div>
             <div class="due">Avant peak season</div>
           </div>
         </div>
-        <div class="action">
-          <div class="action-text">Sourcer 2 à 4 e-commerçants supplémentaires pour élargir la base de test</div>
-          <div class="action-meta">
+        <div class="phase-action">
+          <div class="phase-action-text">Sourcer 2 à 4 e-commerçants supplémentaires pour élargir la base de test et généraliser les connecteurs</div>
+          <div class="phase-action-foot">
             <div class="owners"><span class="tag rawdah">RAWDAH</span><span class="tag maxime">MAXIME</span></div>
-            <div class="due">Octobre</div>
+            <div class="due">TBD</div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="phase critical">
-      <div class="phase-marker">3</div>
-      <div class="phase-head">
-        <div class="phase-title">Clôturer L'arbre vert</div>
+    <div class="phase-card status-critical">
+      <div class="phase-card-top">
+        <div class="phase-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4"/><path d="M6 4h12l-3 4 3 4H6"/></svg>
+        </div>
+        <span class="status-pill">CRITIQUE</span>
+      </div>
+      <div>
+        <div class="phase-title">3 · Clôturer L'arbre vert</div>
         <div class="phase-window">MAINTENANT → 15 OCT.</div>
       </div>
       <p class="phase-goal">La fenêtre la plus proche et la plus qualifiée — deadline ferme.</p>
-      <div class="actions">
-        <div class="action">
-          <div class="action-text">Construire une démo / maquette concrète à partir de l'existant sur la plateforme</div>
-          <div class="action-meta">
+      <div class="phase-actions">
+        <div class="phase-action">
+          <div class="phase-action-text">Construire une démo / maquette concrète à partir de l'existant sur la plateforme</div>
+          <div class="phase-action-foot">
             <div class="owners"><span class="tag maxime">MAXIME</span><span class="tag rawdah">RAWDAH</span></div>
             <div class="due">Avant le 15 oct.</div>
           </div>
         </div>
-        <div class="action">
-          <div class="action-text">Chiffrer une proposition : prix, périmètre, délai d'implémentation</div>
-          <div class="action-meta">
+        <div class="phase-action">
+          <div class="phase-action-text">Chiffrer une proposition : prix, périmètre, délai d'implémentation</div>
+          <div class="phase-action-foot">
             <div class="owners"><span class="tag rawdah">RAWDAH</span><span class="tag maxime">MAXIME</span></div>
             <div class="due">Avant le 15 oct.</div>
           </div>
         </div>
-        <div class="action">
-          <div class="action-text">Présenter sur site chez L'arbre vert</div>
-          <div class="action-meta">
+        <div class="phase-action">
+          <div class="phase-action-text">Présenter une démo sur site chez L'arbre vert</div>
+          <div class="phase-action-foot">
             <div class="owners"><span class="tag maxime">MAXIME</span></div>
             <div class="due">15 octobre</div>
           </div>
@@ -451,26 +578,31 @@
       </div>
     </div>
 
-    <div class="phase">
-      <div class="phase-marker">4</div>
-      <div class="phase-head">
-        <div class="phase-title">Capitaliser</div>
+    <div class="phase-card status-upcoming">
+      <div class="phase-card-top">
+        <div class="phase-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9"/><path d="M10 19V5"/><path d="M16 19v-7"/><path d="M20 19V3"/></svg>
+        </div>
+        <span class="status-pill">À VENIR</span>
+      </div>
+      <div>
+        <div class="phase-title">4 · Capitaliser</div>
         <div class="phase-window">FIN D'ANNÉE</div>
       </div>
       <p class="phase-goal">Transformer le pilote en preuve commerciale réutilisable.</p>
-      <div class="actions">
-        <div class="action">
-          <div class="action-text">Construire le cas client (contexte, action, résultat) dès que le pilote donne des résultats factuels</div>
-          <div class="action-meta">
+      <div class="phase-actions">
+        <div class="phase-action">
+          <div class="phase-action-text">Construire le cas client (contexte, action, résultat) dès que le pilote e-commerce donne des résultats factuels</div>
+          <div class="phase-action-foot">
             <div class="owners"><span class="tag rawdah">RAWDAH</span></div>
             <div class="due">Fin d'année</div>
           </div>
         </div>
-        <div class="action">
-          <div class="action-text">S'en servir pour aborder un deuxième client e-commerce et accélérer la conversion B2B</div>
-          <div class="action-meta">
+        <div class="phase-action">
+          <div class="phase-action-text">S'en servir pour aborder un deuxième client e-commerce et accélérer la conversion B2B au-delà de L'arbre vert</div>
+          <div class="phase-action-foot">
             <div class="owners"><span class="tag rawdah">RAWDAH</span><span class="tag maxime">MAXIME</span></div>
-            <div class="due">Fin d'année / 2027</div>
+            <div class="due">Fin d'année / déb. 2027</div>
           </div>
         </div>
       </div>
@@ -482,10 +614,11 @@
     <span><span class="dot rawdah"></span> Rawdah</span>
     <span><span class="dot maxime"></span> Maxime</span>
     <span><span class="dot critical"></span> Deadline critique</span>
+    <span><span class="dot upcoming"></span> À venir</span>
   </div>
 
   <footer>
-    Yara Link — Diagnostic &amp; Roadmap · Atelier Operations · Septembre 2026
+    Yara Link — Diagnostic &amp; Next Steps · Atelier Operations · Septembre 2026
   </footer>
 
 </div>
