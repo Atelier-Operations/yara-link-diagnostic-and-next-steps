@@ -326,6 +326,31 @@
     font-style: italic;
   }
 
+  /* ---------- Tab nav ---------- */
+  .tab-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+
+  .tab-nav a {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.02em;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    background: var(--panel);
+  }
+
+  .tab-nav a.active {
+    color: var(--teal);
+    border-color: var(--teal);
+    background: var(--teal-soft);
+  }
+
   footer {
     margin-top: 72px;
     padding-top: 24px;
@@ -337,6 +362,11 @@
 </head>
 <body>
 <div class="wrap">
+
+  <div class="tab-nav">
+    <a href="index.html" class="active">Yara Link</a>
+    <a href="reconciliation.html">Réconciliation logistique</a>
+  </div>
 
   <header>
     <div class="kicker">DIAGNOSTIC OPÉRATIONNEL · ATELIER OPERATIONS · SEPTEMBRE 2026</div>
