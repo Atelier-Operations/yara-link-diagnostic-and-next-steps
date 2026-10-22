@@ -237,8 +237,8 @@ function renderWeek(its, t) {
     <div class="week-head"><h2 id="week-title">Cette semaine</h2><span>du ${fmt(mon)} au ${fmtY(sun)} · aujourd'hui : ${fmtDay(t)}</span></div>
     <div class="week-cols">
       ${col("due", "Deadline cette semaine", due, "Aucune deadline cette semaine.")}
-      ${col("late", "En retard", late, "Rien en retard.")}
       ${col("run", "Commencé, deadline plus tard", running, "Rien.")}
+      ${col("late", "En retard", late, "Rien en retard.")}
     </div>`;
 }
 
