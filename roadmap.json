@@ -4,13 +4,12 @@
   "lignes": [
     {"titre":"Point négociations L'Arbre Vert et Litier Français","categorie":"Stratégie","client":"","debut":"2026-10-13","fin":"2026-10-16","responsable":"Rawdah, Maxime","statut":"fait","type":"tâche"},
     {"titre":"Fiche client idéal : secteur, taille, volume, décideur","categorie":"Stratégie","client":"","debut":"2026-10-16","fin":"2026-10-26","responsable":"Rawdah","statut":"en cours","type":"tâche"},
-    {"titre":"Propositions de valeur par segment (e-commerce, B2B, logistique)","categorie":"Stratégie","client":"","debut":"2026-10-20","fin":"2026-10-24","responsable":"Rawdah","statut":"en cours","type":"tâche"},
-    {"titre":"Tri base Yara Connect : 3 300 contacts → ~200 décideurs","categorie":"Base et leads","client":"","debut":"2026-10-16","fin":"2026-10-23","responsable":"Maxime","statut":"en cours","type":"tâche"},
+    {"titre":"Propositions de valeur par segment (e-commerce, B2B, logistique)","categorie":"Stratégie","client":"","debut":"2026-10-20","fin":"2026-10-28","responsable":"Rawdah","statut":"en cours","type":"tâche"},
     {"titre":"Envoi base enrichie à Rawdah","categorie":"Base et leads","client":"","debut":"2026-10-16","fin":"2026-10-23","responsable":"Maxime","statut":"fait","type":"tâche"},
     {"titre":"Sélection d'un premier lot de 5 prospects","categorie":"Base et leads","client":"","debut":"2026-10-23","fin":"2026-10-27","responsable":"Rawdah","statut":"à faire","type":"tâche"},
     {"titre":"Liste des manques du site","categorie":"Site et visibilité","client":"","debut":"2026-10-13","fin":"2026-10-17","responsable":"Rawdah","statut":"en cours","type":"tâche"},
     {"titre":"Relance Flora : v1 du site, autres polices","categorie":"Site et visibilité","client":"","debut":"2026-10-16","fin":"2026-10-23","responsable":"Rawdah, Maxime","statut":"en cours","type":"tâche"},
-    {"titre":"Relecture maquette site + feedback","categorie":"Site et visibilité","client":"","debut":"2026-10-22","fin":"2026-10-22","responsable":"Rawdah","statut":"à faire","type":"tâche"},
+    {"titre":"Relecture maquette site + feedback (dépend de Flora)","categorie":"Site et visibilité","client":"","debut":"2026-10-22","fin":"2026-10-23","responsable":"Rawdah","statut":"en cours","type":"tâche"},
     {"titre":"Roadmap envoyée à Maxime","categorie":"Pilotage","client":"","debut":"2026-10-16","fin":"2026-10-22","responsable":"Rawdah","statut":"en cours","type":"tâche"},
     {"titre":"Offre : licences logicielles, sur-mesure facturé à part","categorie":"Offre","client":"","debut":"2026-10-27","fin":"2026-10-31","responsable":"Maxime","statut":"à faire","type":"tâche"},
     {"titre":"Option codes SH / douane dans l'offre","categorie":"Offre","client":"","debut":"2026-10-27","fin":"2026-10-31","responsable":"Maxime","statut":"à faire","type":"tâche"},
@@ -32,7 +31,6 @@
     {"titre":"RDV Pierre-Paul Marini, vendredi 14 h 30 + questions de découverte","categorie":"Clients","client":"Mediaco Transit","debut":"2026-10-19","fin":"2026-10-23","responsable":"Maxime, Rawdah","statut":"en cours","type":"tâche"},
     {"titre":"Call Base+ débrief à Maxime","categorie":"Partenariats","client":"Base.com","debut":"2026-10-23","fin":"2026-10-23","responsable":"Rawdah","statut":"à faire","type":"tâche"},
     {"titre":"Point hebdo tableau de leads","categorie":"Pilotage","client":"","debut":"2026-10-13","fin":"2026-12-14","responsable":"","statut":"à faire","type":"tâche"},
-    {"titre":"Points d'avancement prospection à Maxime","categorie":"Pilotage","client":"","debut":"2026-10-20","fin":"2026-11-08","responsable":"Rawdah","statut":"à faire","type":"tâche"},
-    {"titre":"Point leads + feedback site, jeudi 16 h","categorie":"Pilotage","client":"","debut":"2026-10-22","fin":"2026-10-22","responsable":"Maxime, Rawdah","statut":"à faire","type":"tâche"}
+    {"titre":"Points d'avancement prospection à Maxime","categorie":"Pilotage","client":"","debut":"2026-10-20","fin":"2026-11-08","responsable":"Rawdah","statut":"à faire","type":"tâche"}
   ]
 }
