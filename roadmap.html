@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roadmap GTM Yara Link</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: header, "Cette semaine" panel, Gantt grouped by category, add-line helper. Data comes from roadmap.json. */
+:root {
+  --bg: #F2F3EF;
+  --surface: #FFFFFF;
+  --ink: #14181F;
+  --muted: #5B6169;
+  --line: #D9DBD3;
+  --grid: #E9EAE5;
+  --bar: #0F6E5C;
+  --ok: #0F6E5C;
+  --today: #B0742A;
+  --warn: #B3261E;
+  --btn: #0F6E5C;
+  --btn-ink: #FFFFFF;
+  --teal-soft: #E4EFEC;
+  --display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 14px; line-height: 1.5; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 24px; padding-block: 64px 100px; display: flex; flex-direction: column; gap: 22px; }
+header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; }
+.intro { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--display); font-weight: 600; font-size: clamp(28px, 4.5vw, 40px); line-height: 1.05; margin: 0; letter-spacing: -.01em; }
+h2 { font-family: var(--display); font-weight: 500; font-size: 18px; margin: 0; }
+a.btn, button { font: inherit; font-size: 13px; font-weight: 500; border-radius: 7px; padding: 7px 14px; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); text-decoration: none; display: inline-block; }
+a.btn.primary, button.primary { background: var(--btn); color: var(--btn-ink); border-color: var(--btn); }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--bar); outline-offset: 2px; }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; }
+.error { background: var(--surface); border: 1px solid var(--warn); color: var(--warn); border-radius: 10px; padding: 12px 14px; }
+
+/* This week */
+.week { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.week-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px; }
+.week-head span { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.week-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.wcol { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.wcol h3 { margin: 0; font-family: var(--mono); font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); display: flex; gap: 8px; align-items: center; }
+.wcol h3 b { font-family: var(--display); font-size: 16px; color: var(--ink); letter-spacing: 0; }
+.wcol.late h3 b { color: var(--warn); }
+.wcol ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.task { border: 1px solid var(--line); border-left: 3px solid var(--bar); border-radius: 7px; padding: 7px 10px; background: var(--bg); display: flex; flex-direction: column; gap: 2px; }
+.wcol.late .task { border-left-color: var(--warn); }
+.task.dec { border-left-color: var(--today); }
+.task .tt { font-size: 13px; font-weight: 500; overflow-wrap: anywhere; }
+.task .tm { font-family: var(--mono); font-size: 11px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 0 8px; }
+.empty { font-size: 13px; color: var(--muted); }
+
+/* Gantt */
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.lg-bar { width: 22px; height: 10px; border-radius: 3px; background: var(--bar); }
+.lg-del { width: 22px; height: 10px; border-radius: 3px; border: 2px dashed var(--bar); }
+.lg-done { width: 22px; height: 10px; border-radius: 3px; background: var(--bar); opacity: .3; }
+.lg-dia { width: 10px; height: 10px; transform: rotate(45deg); background: var(--today); }
+.lg-today { width: 0; height: 14px; border-left: 2px solid var(--today); }
+.chart-box { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
+.chart { min-width: 900px; position: relative; }
+.row { display: grid; grid-template-columns: 320px 1fr; align-items: center; min-height: 36px; border-bottom: 1px solid var(--grid); }
+.row:last-child { border-bottom: 0; }
+.label { padding: 6px 14px; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.label .t { font-size: 13px; font-weight: 500; overflow-wrap: anywhere; }
+.label .t b, .task .tt b { font-weight: 600; }
+.label .m { font-family: var(--mono); font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; display: flex; flex-wrap: wrap; gap: 0 8px; }
+.st { border-radius: 4px; padding: 0 5px; border: 1px solid var(--line); }
+.st.doing { border-color: var(--bar); color: var(--bar); }
+.st.done { border-color: var(--ok); color: var(--ok); }
+.st.blocked { border-color: var(--warn); color: var(--warn); }
+.row.is-done .t { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line); }
+.track { position: relative; height: 100%; min-height: 36px; }
+.head { background: var(--surface); border-bottom: 1px solid var(--line); }
+.head .label { font-family: var(--mono); font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.wk { position: absolute; top: 0; bottom: 0; font-family: var(--mono); font-size: 11px; color: var(--muted); padding: 8px 0 0 5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.wk b { display: block; font-weight: 500; color: var(--ink); }
+.wk.now b { color: var(--today); }
+.group { background: var(--bg); }
+.group .label { font-family: var(--display); font-weight: 500; font-size: 15px; flex-direction: row; align-items: center; gap: 8px; }
+.group .label .cnt { font-family: var(--mono); font-size: 11px; color: var(--muted); font-weight: 400; }
+.gridlines { position: absolute; bottom: 0; left: 320px; right: 0; pointer-events: none; z-index: 0; }
+.gridlines i { position: absolute; top: 0; bottom: 0; border-left: 1px solid var(--grid); }
+.gridlines .thisweek { position: absolute; top: 0; bottom: 0; background: var(--today); opacity: .06; }
+.todayline { position: absolute; top: 0; bottom: 0; width: 0; border-left: 2px solid var(--today); z-index: 2; }
+.todayline span { position: absolute; top: 2px; left: 4px; font-family: var(--mono); font-size: 10px; color: var(--today); background: var(--surface); padding: 0 3px; border-radius: 3px; white-space: nowrap; }
+.bar { position: absolute; top: 50%; height: 16px; transform: translateY(-50%); border-radius: 4px; z-index: 1; background: var(--bar); }
+.bar.deliv { background: transparent; border: 2px dashed var(--bar); }
+.bar.done { opacity: .3; }
+.bar.blocked { outline: 2px solid var(--warn); outline-offset: 1px; }
+.diamond { position: absolute; top: 50%; width: 13px; height: 13px; transform: translate(-50%, -50%) rotate(45deg); background: var(--today); z-index: 1; border-radius: 2px; }
+.diamond.done { background: var(--ok); }
+.nodate { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.row > * { position: relative; z-index: 1; }
+
+/* Add-line helper */
+details.add { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; }
+details.add summary { cursor: pointer; font-family: var(--display); font-weight: 500; font-size: 16px; }
+.add-body { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+.add-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+.add-grid label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--muted); }
+.add-grid label.wide { grid-column: 1 / -1; }
+.add input, .add select { font: inherit; font-size: 13px; border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; background: var(--bg); color: var(--ink); width: 100%; }
+.add ol { margin: 0; padding-left: 20px; font-size: 13px; display: flex; flex-direction: column; gap: 4px; }
+pre.snippet { margin: 0; background: var(--bg); border: 1px solid var(--line); border-radius: 7px; padding: 10px; font-family: var(--mono); font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.copied { font-size: 12px; color: var(--ok); }
+
+.kpi { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 12.5px; }
+.kpi b { font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-right: 4px; }
+.kpi span { border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; background: var(--surface); }
+footer { font-size: 12px; color: var(--muted); font-family: var(--mono); }
+.tab-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.tab-nav a { font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.02em; padding: 8px 14px; border-radius: 6px; text-decoration: none; color: var(--muted); border: 1px solid var(--line); background: var(--surface); }
+.tab-nav a.active { color: var(--bar); border-color: var(--bar); background: var(--teal-soft); }
+@media (max-width: 760px) { .wrap { padding-inline: 16px; padding-block: 32px 56px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="tab-nav">
+    <a href="index.html">Diagnostic Yara Link</a>
+    <a href="reconciliation.html">Point d'avancement</a>
+    <a href="roadmap.html" class="active">Roadmap</a>
+  </div>
+  <header>
+    <div class="intro">
+      <span class="eyebrow" id="eyebrow">Go-to-market</span>
+      <h1>Roadmap Yara Link</h1>
+    </div>
+    <div class="tools">
+      <a class="btn primary" id="edit-link" target="_blank" rel="noopener">Modifier les lignes sur GitHub</a>
+    </div>
+  </header>
+  <div id="error" hidden></div>
+  <section class="week" id="week" aria-labelledby="week-title"></section>
+  <div class="legend">
+    <span><i class="lg-bar"></i>Tâche</span><span><i class="lg-del"></i>Livrable</span><span><i class="lg-dia"></i>Décision</span><span><i class="lg-done"></i>Fait</span><span><i class="lg-today"></i>Aujourd'hui</span>
+  </div>
+  <div class="chart-box"><div class="chart" id="chart"></div></div>
+
+  <details class="add">
+    <summary>Ajouter une ligne</summary>
+    <div class="add-body">
+      <div class="add-grid">
+        <label class="wide">Intitulé<input id="f-titre" placeholder="ex. Relance thyssenkrupp"></label>
+        <label>Catégorie<select id="f-categorie"></select></label>
+        <label>Client<input id="f-client" placeholder="optionnel"></label>
+        <label>Début<input id="f-debut" type="date"></label>
+        <label>Deadline<input id="f-fin" type="date"></label>
+        <label>Responsable<input id="f-responsable" placeholder="ex. Maxime"></label>
+        <label>Statut<select id="f-statut"><option>à faire</option><option>en cours</option><option>fait</option><option>bloqué</option></select></label>
+        <label>Type<select id="f-type"><option>tâche</option><option>livrable</option><option>décision</option></select></label>
+      </div>
+      <pre class="snippet" id="snippet"></pre>
+      <div class="tools"><button id="copy" class="primary">Copier la ligne</button><a class="btn" id="edit-link-2" target="_blank" rel="noopener">Ouvrir roadmap.json sur GitHub</a><span class="copied" id="copied" hidden>Copié</span></div>
+      <ol>
+        <li>Copier la ligne.</li>
+        <li>Ouvrir roadmap.json sur GitHub (crayon « Edit »).</li>
+        <li>Coller la ligne dans la liste <code>"lignes"</code>, avec une virgule entre deux lignes.</li>
+        <li>« Commit changes ». La page se met à jour en 1 à 2 minutes.</li>
+      </ol>
+    </div>
+  </details>
+
+  <div class="kpi" id="kpi"></div>
+  <footer id="footer"></footer>
+</div>
+
+<script>
+(() => {
+const REPO = "Atelier-Operations/yara-link-diagnostic-and-next-steps";
+const EDIT_URL = `https://github.com/${REPO}/edit/master/roadmap.json`;
+const DAY = 864e5;
+const d = s => new Date(s + "T00:00:00Z");
+const iso = t => new Date(t).toISOString().slice(0, 10);
+const fmt = s => d(s).toLocaleDateString("fr-FR", { day: "numeric", month: "short", timeZone: "UTC" });
+const fmtY = s => d(s).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+const fmtDay = s => d(s).toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" });
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const validDate = s => /^\d{4}-\d{2}-\d{2}$/.test(s || "");
+const norm = s => String(s || "").trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+const STATUS = { "a faire": "todo", "en cours": "doing", "fait": "done", "bloque": "blocked" };
+const STATUS_LABEL = { todo: "À faire", doing: "En cours", done: "Fait", blocked: "Bloqué" };
+const KIND = { "tache": "t", "livrable": "l", "livrables": "l", "decision": "d" };
+
+let data = null;
+// Local date (the viewer's calendar day), recomputed on every render
+const today = () => { const n = new Date(); return iso(Date.UTC(n.getFullYear(), n.getMonth(), n.getDate())); };
+const weekBounds = t => { const x = +d(t); const mon = x - ((new Date(x).getUTCDay() + 6) % 7) * DAY; return [iso(mon), iso(mon + 6 * DAY)]; };
+
+function items() {
+  return data.lignes.map(x => ({
+    title: x.titre || "", cat: x.categorie || "", client: x.client || "", start: x.debut || "", end: x.fin || x.debut || "",
+    owner: x.responsable || "", status: STATUS[norm(x.statut)] || "todo", kind: KIND[norm(x.type)] || "t",
+  }));
+}
+
+function taskCard(x) {
+  const due = validDate(x.end) ? fmt(x.end) : "sans date";
+  return `<li class="task${x.kind === "d" ? " dec" : ""}"><span class="tt">${x.client ? `<b>${esc(x.client)}</b> · ` : ""}${esc(x.title)}</span>
+    <span class="tm"><span>${due}</span><span>${esc(x.owner) || "—"}</span><span>${esc(x.cat)}</span>${x.status !== "todo" ? `<span class="st ${x.status}">${STATUS_LABEL[x.status]}</span>` : ""}</span></li>`;
+}
+
+function renderWeek(its, t) {
+  const [mon, sun] = weekBounds(t);
+  const open = its.filter(x => x.status !== "done");
+  const byEnd = (a, b) => a.end.localeCompare(b.end);
+  const due = open.filter(x => validDate(x.end) && x.end >= mon && x.end <= sun).sort(byEnd);
+  const late = open.filter(x => validDate(x.end) && x.end < mon).sort(byEnd);
+  const running = open.filter(x => validDate(x.start) && validDate(x.end) && x.start <= sun && x.end > sun).sort(byEnd);
+  const col = (cls, name, list, emptyTxt) => `<div class="wcol ${cls}"><h3><b>${list.length}</b>${name}</h3>${list.length ? `<ul>${list.map(taskCard).join("")}</ul>` : `<p class="empty">${emptyTxt}</p>`}</div>`;
+  document.getElementById("week").innerHTML = `
+    <div class="week-head"><h2 id="week-title">Cette semaine</h2><span>du ${fmt(mon)} au ${fmtY(sun)} · aujourd'hui : ${fmtDay(t)}</span></div>
+    <div class="week-cols">
+      ${col("due", "Deadline cette semaine", due, "Aucune deadline cette semaine.")}
+      ${col("late", "En retard", late, "Rien en retard.")}
+      ${col("run", "Commencé, deadline plus tard", running, "Rien.")}
+    </div>`;
+}
+
+function renderChart(its, t) {
+  const ds = its.flatMap(i => [i.start, i.end]).filter(validDate).sort();
+  let t0 = +d(ds[0] || t); t0 -= ((new Date(t0).getUTCDay() + 6) % 7) * DAY;
+  let t1 = +d(ds.at(-1) || t) + DAY; t1 += ((7 - ((new Date(t1).getUTCDay() + 6) % 7)) % 7) * DAY;
+  if (t1 - t0 < 28 * DAY) t1 = t0 + 28 * DAY;
+  const span = (t1 - t0) / DAY;
+  const pct = s => ((+d(s) - t0) / DAY) / span * 100;
+  const [mon] = weekBounds(t);
+  const weeks = [];
+  for (let x = t0; x < t1; x += 7 * DAY) weeks.push(iso(x));
+  let h = `<div class="gridlines">${weeks.map(w => `<i style="left:${pct(w)}%"></i>`).join("")}`;
+  if (+d(t) >= t0 && +d(t) < t1) h += `<div class="thisweek" style="left:${pct(mon)}%;width:${700 / span}%"></div><div class="todayline" style="left:${pct(t) + 50 / span}%"><span>Aujourd'hui</span></div>`;
+  h += `</div><div class="row head"><div class="label">Ligne · dates · responsable</div><div class="track">${
+    weeks.map((w, i) => `<span class="wk${w === mon ? " now" : ""}" style="left:${pct(w)}%"><b>S${i + 1}</b>${fmt(w)}</span>`).join("")}</div></div>`;
+  const cats = [...data.categories, ...new Set(its.map(x => x.cat).filter(c => c && !data.categories.includes(c)))];
+  const groups = [...cats.map(c => ({ name: c, its: its.filter(x => x.cat === c) })), { name: "Sans catégorie", its: its.filter(x => !x.cat) }].filter(g => g.its.length);
+  groups.forEach(g => {
+    const done = g.its.filter(x => x.status === "done").length;
+    h += `<div class="row group"><div class="label">${esc(g.name)} <span class="cnt">${done}/${g.its.length}</span></div><div class="track"></div></div>`;
+    g.its.forEach(x => {
+      const ok = validDate(x.start) && validDate(x.end);
+      const dates = !ok ? "sans dates" : x.start === x.end ? fmtY(x.start) : `${fmt(x.start)} → ${fmtY(x.end)}`;
+      let mark = `<span class="nodate">sans dates</span>`;
+      if (ok) {
+        const left = pct(x.start), width = Math.max(pct(x.end) - left + 100 / span, 0.8);
+        const cls = (x.status === "done" ? " done" : "") + (x.status === "blocked" ? " blocked" : "");
+        mark = x.kind === "d" ? `<i class="diamond${cls}" style="left:${left + 50 / span}%"></i>`
+          : `<i class="bar${x.kind === "l" ? " deliv" : ""}${cls}" style="left:${left}%;width:${width}%"></i>`;
+      }
+      const st = x.status !== "todo" ? `<span class="st ${x.status}">${STATUS_LABEL[x.status]}</span>` : "";
+      h += `<div class="row${x.status === "done" ? " is-done" : ""}"><div class="label"><span class="t">${x.client ? `<b>${esc(x.client)}</b> · ` : ""}${esc(x.title)}</span><span class="m"><span>${dates}</span><span>${esc(x.owner) || "—"}</span>${st}</span></div><div class="track">${mark}</div></div>`;
+    });
+  });
+  const chart = document.getElementById("chart");
+  chart.innerHTML = h;
+  chart.querySelector(".gridlines").style.top = chart.querySelector(".head").offsetHeight + "px";
+  document.getElementById("eyebrow").textContent = `Go-to-market · ${ds.length ? fmtY(ds[0]) + " → " + fmtY(ds.at(-1)) : ""}`;
+}
+
+function render() {
+  if (!data) return;
+  const t = today(), its = items();
+  renderWeek(its, t);
+  renderChart(its, t);
+  document.getElementById("kpi").innerHTML = (data.indicateurs || []).length ? `<b>Indicateurs hebdo</b>${data.indicateurs.map(k => `<span>${esc(k)}</span>`).join("")}` : "";
+  document.getElementById("footer").textContent = `${its.length} lignes · données : roadmap.json`;
+  const sel = document.getElementById("f-categorie");
+  if (!sel.options.length) sel.innerHTML = data.categories.map(c => `<option>${esc(c)}</option>`).join("");
+  snippet();
+}
+
+// Re-render when the calendar day changes, and when the tab comes back into view
+let lastDay = today();
+setInterval(() => { if (today() !== lastDay) { lastDay = today(); render(); } }, 60 * 1000);
+document.addEventListener("visibilitychange", () => { if (!document.hidden) { lastDay = today(); render(); } });
+window.addEventListener("resize", () => { const c = document.getElementById("chart"); const g = c.querySelector(".gridlines"); if (g) g.style.top = c.querySelector(".head").offsetHeight + "px"; });
+
+// Add-line helper
+const F = ["titre", "categorie", "client", "debut", "fin", "responsable", "statut", "type"];
+function snippet() {
+  const o = Object.fromEntries(F.map(k => [k, document.getElementById("f-" + k).value.trim()]));
+  if (!o.fin) o.fin = o.debut;
+  document.getElementById("snippet").textContent = "    " + JSON.stringify(o) + ",";
+}
+F.forEach(k => { const el = document.getElementById("f-" + k); el.addEventListener("input", snippet); el.addEventListener("change", snippet); });
+document.getElementById("f-debut").value = today();
+document.getElementById("copy").addEventListener("click", async () => {
+  const txt = document.getElementById("snippet").textContent;
+  try { await navigator.clipboard.writeText(txt); const c = document.getElementById("copied"); c.hidden = false; setTimeout(() => c.hidden = true, 2000); }
+  catch { const r = document.createRange(); r.selectNodeContents(document.getElementById("snippet")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+});
+document.getElementById("edit-link").href = EDIT_URL;
+document.getElementById("edit-link-2").href = EDIT_URL;
+
+fetch("roadmap.json?v=" + Date.now(), { cache: "no-store" })
+  .then(r => { if (!r.ok) throw new Error("roadmap.json introuvable (" + r.status + ")"); return r.text(); })
+  .then(txt => { try { data = JSON.parse(txt); } catch (e) { throw new Error("roadmap.json contient une erreur de format : " + e.message + ". Vérifier les virgules et les guillemets dans la dernière modification."); }
+    if (!Array.isArray(data.lignes)) throw new Error("roadmap.json : la liste \"lignes\" est absente.");
+    data.categories = data.categories || []; render(); })
+  .catch(e => { const el = document.getElementById("error"); el.className = "error"; el.textContent = e.message; el.hidden = false; });
+})();
+</script>
+</body>
+</html>
