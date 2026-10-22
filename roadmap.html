@@ -3,28 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Roadmap GTM Yara Link</title>
+<title>Roadmap GTM Yaralink</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32x32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <style>
 /* Layout: header, "Cette semaine" panel, Gantt grouped by category, add-line helper. Data comes from roadmap.json. */
 :root {
-  --bg: #F2F3EF;
+  --bg: #F9F3FF;
   --surface: #FFFFFF;
-  --ink: #14181F;
-  --muted: #5B6169;
-  --line: #D9DBD3;
-  --grid: #E9EAE5;
-  --bar: #0F6E5C;
-  --ok: #0F6E5C;
-  --today: #B0742A;
+  --ink: #0C0114;
+  --muted: #5A4B6E;
+  --line: #E7D7F9;
+  --grid: #F3E9FF;
+  --bar: #AA6AFF;
+  --ok: #780DF3;
+  --today: #780DF3;
   --warn: #B3261E;
-  --btn: #0F6E5C;
+  --btn: #780DF3;
   --btn-ink: #FFFFFF;
-  --teal-soft: #E4EFEC;
-  --display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
-  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  --teal-soft: #F3E9FF;
+  --display: "ITC Bauhaus", "Bauhaus", "Fredoka", "Arial Rounded MT Bold", sans-serif;
+  --body: "Fredoka", "Arial Rounded MT Bold", sans-serif;
+  --mono: "Fredoka", "Arial Rounded MT Bold", sans-serif;
   color-scheme: light;
 }
 * { box-sizing: border-box; }
@@ -32,8 +35,8 @@ body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--b
 .wrap { max-width: 1080px; margin: 0 auto; padding-inline: 24px; padding-block: 64px 100px; display: flex; flex-direction: column; gap: 22px; }
 header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; }
 .intro { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-h1 { font-family: var(--display); font-weight: 600; font-size: clamp(28px, 4.5vw, 40px); line-height: 1.05; margin: 0; letter-spacing: -.01em; }
+.eyebrow { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--btn); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--display); font-weight: 600; color: var(--ink); font-size: clamp(28px, 4.5vw, 40px); line-height: 1.05; margin: 0; letter-spacing: -.01em; }
 h2 { font-family: var(--display); font-weight: 500; font-size: 18px; margin: 0; }
 a.btn, button { font: inherit; font-size: 13px; font-weight: 500; border-radius: 7px; padding: 7px 14px; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); text-decoration: none; display: inline-block; }
 a.btn.primary, button.primary { background: var(--btn); color: var(--btn-ink); border-color: var(--btn); }
@@ -95,7 +98,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .todayline span { position: absolute; top: 2px; left: 4px; font-family: var(--mono); font-size: 10px; color: var(--today); background: var(--surface); padding: 0 3px; border-radius: 3px; white-space: nowrap; }
 .bar { position: absolute; top: 50%; height: 16px; transform: translateY(-50%); border-radius: 4px; z-index: 1; background: var(--bar); }
 .bar.deliv { background: transparent; border: 2px dashed var(--bar); }
-.bar.done { opacity: .3; }
+.bar.done { opacity: .35; }
 .bar.blocked { outline: 2px solid var(--warn); outline-offset: 1px; }
 .diamond { position: absolute; top: 50%; width: 13px; height: 13px; transform: translate(-50%, -50%) rotate(45deg); background: var(--today); z-index: 1; border-radius: 2px; }
 .diamond.done { background: var(--ok); }
@@ -118,23 +121,35 @@ pre.snippet { margin: 0; background: var(--bg); border: 1px solid var(--line); b
 .kpi b { font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-right: 4px; }
 .kpi span { border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; background: var(--surface); }
 footer { font-size: 12px; color: var(--muted); font-family: var(--mono); }
-.tab-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
-.tab-nav a { font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.02em; padding: 8px 14px; border-radius: 6px; text-decoration: none; color: var(--muted); border: 1px solid var(--line); background: var(--surface); }
-.tab-nav a.active { color: var(--bar); border-color: var(--bar); background: var(--teal-soft); }
+.tab-nav { display: flex; flex-wrap: wrap; gap: 8px; }
+/* ---------- Yaralink chrome (charte v1.0) ---------- */
+.wrap { position: relative; }
+.topbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 40px; position: relative; z-index: 1; }
+.topbar .brand img { display: block; height: 30px; width: auto; }
+.topbar .tab-nav { margin-bottom: 0; }
+.alveoles { position: absolute; top: 8px; right: -40px; width: 170px; height: auto; opacity: .9; pointer-events: none; z-index: 0; }
+@media (max-width: 760px) { .alveoles { display: none; } }
+
+.tab-nav a { font-family: var(--mono); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; font-size: 12px; letter-spacing: 0.02em; padding: 8px 14px; border-radius: 6px; text-decoration: none; color: var(--muted); border: 1px solid var(--line); background: var(--surface); }
+.tab-nav a.active { color: var(--btn); border-color: var(--btn); background: var(--teal-soft); }
 @media (max-width: 760px) { .wrap { padding-inline: 16px; padding-block: 32px 56px; } }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="tab-nav">
-    <a href="index.html">Diagnostic Yara Link</a>
+  <img class="alveoles" src="assets/alveoles.svg" alt="" aria-hidden="true">
+  <div class="topbar">
+    <a class="brand" href="index.html"><img src="assets/yaralink-logo.svg" alt="Yaralink"></a>
+    <div class="tab-nav">
+    <a href="index.html">Diagnostic Yaralink</a>
     <a href="reconciliation.html">Point d'avancement</a>
     <a href="roadmap.html" class="active">Roadmap</a>
+  </div>
   </div>
   <header>
     <div class="intro">
       <span class="eyebrow" id="eyebrow">Go-to-market</span>
-      <h1>Roadmap Yara Link</h1>
+      <h1>Roadmap Yaralink</h1>
     </div>
     <div class="tools">
       <a class="btn primary" id="edit-link" target="_blank" rel="noopener">Modifier les lignes sur GitHub</a>

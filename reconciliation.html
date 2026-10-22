@@ -6,24 +6,29 @@
 <title>Réconciliation logistique — Notes opérationnelles</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32x32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <style>
   :root {
-    --bg: #F2F3EF;
+    --bg: #F9F3FF;
     --panel: #FFFFFF;
-    --ink: #14181F;
-    --muted: #5B6169;
-    --line: #D9DBD3;
-    --teal: #0F6E5C;
-    --teal-soft: #E4EFEC;
-    --amber: #B0742A;
-    --amber-soft: #F5EBDC;
-    --rawdah: #2C4A7C;
-    --rawdah-soft: #E7ECF4;
-    --maxime: #6B5B95;
-    --maxime-soft: #EEEAF5;
-    --gray: #7A8088;
-    --gray-soft: #E9EAE5;
+    --ink: #0C0114;
+    --muted: #5A4B6E;
+    --line: #E7D7F9;
+    --teal: #780DF3;
+    --teal-soft: #F3E9FF;
+    --amber: #A15C12;
+    --amber-soft: #FBEFDF;
+    --rawdah: #780DF3;
+    --rawdah-soft: #F3E9FF;
+    --maxime: #0C0114;
+    --maxime-soft: #E7D7F9;
+    --gray: #5A4B6E;
+    --gray-soft: #F3E9FF;
+    --violet-yara: #AA6AFF;
+    --lavande: #E7D7F9;
   }
 
   * { box-sizing: border-box; }
@@ -32,14 +37,14 @@
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: "Fredoka", "Arial Rounded MT Bold", sans-serif;
     font-size: 16px;
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
   }
 
   h1, h2, h3 {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "ITC Bauhaus", "Bauhaus", "Fredoka", "Arial Rounded MT Bold", sans-serif;
     font-weight: 600;
     margin: 0;
   }
@@ -58,7 +63,7 @@
   }
 
   .tab-nav a {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: "Fredoka", "Arial Rounded MT Bold", sans-serif; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
     font-size: 12.5px;
     letter-spacing: 0.02em;
     padding: 8px 14px;
@@ -81,7 +86,7 @@
   }
 
   .kicker {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: "Fredoka", "Arial Rounded MT Bold", sans-serif; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
     font-size: 13px;
     color: var(--teal);
     margin-bottom: 14px;
@@ -90,7 +95,7 @@
 
   /* ---------- Section labels ---------- */
   .section-label {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: "Fredoka", "Arial Rounded MT Bold", sans-serif; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
     font-size: 13px;
     color: var(--muted);
     text-transform: none;
@@ -107,7 +112,7 @@
   }
 
   .sub-label {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: "ITC Bauhaus", "Bauhaus", "Fredoka", "Arial Rounded MT Bold", sans-serif;
     font-weight: 600;
     font-size: 15px;
     margin: 32px 0 14px;
@@ -139,7 +144,7 @@
 
   .data-table th {
     text-align: left;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: "Fredoka", "Arial Rounded MT Bold", sans-serif; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
     font-size: 10.5px;
     letter-spacing: 0.04em;
     color: var(--muted);
@@ -160,7 +165,7 @@
   .data-table tr:last-child td { border-bottom: none; }
 
   .data-table td.step {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: "Fredoka", "Arial Rounded MT Bold", sans-serif; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
     font-size: 12.5px;
     color: var(--muted);
     white-space: nowrap;
@@ -256,7 +261,7 @@
   }
 
   .phase-window {
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: "Fredoka", "Arial Rounded MT Bold", sans-serif; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
     font-size: 12px;
     color: var(--muted);
   }
@@ -286,15 +291,27 @@
     font-size: 13px;
     color: var(--muted);
   }
+  /* ---------- Yaralink chrome (charte v1.0) ---------- */
+  .wrap { position: relative; }
+  .topbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 40px; position: relative; z-index: 1; }
+  .topbar .brand img { display: block; height: 30px; width: auto; }
+  .topbar .tab-nav { margin-bottom: 0; }
+  .alveoles { position: absolute; top: 8px; right: -40px; width: 170px; height: auto; opacity: .9; pointer-events: none; z-index: 0; }
+  @media (max-width: 760px) { .alveoles { display: none; } }
+
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <div class="tab-nav">
-    <a href="index.html">Diagnostic Yara Link</a>
+  <img class="alveoles" src="assets/alveoles.svg" alt="" aria-hidden="true">
+  <div class="topbar">
+    <a class="brand" href="index.html"><img src="assets/yaralink-logo.svg" alt="Yaralink"></a>
+    <div class="tab-nav">
+    <a href="index.html">Diagnostic Yaralink</a>
     <a href="reconciliation.html" class="active">Point d'avancement</a>
     <a href="roadmap.html">Roadmap</a>
+  </div>
   </div>
 
   <header>
